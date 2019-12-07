@@ -1,11 +1,9 @@
 'use strict';
 
-const storage = require('@google-cloud/storage')();
-const pubsub = require('@google-cloud/pubsub')();
-const vision = require('@google-cloud/vision')();
-const bigquery = require('@google-cloud/bigquery')();
-
-
+const storage = require('@google-cloud/storage');
+const pubsub = require('@google-cloud/pubsub');
+const vision = require('@google-cloud/vision');
+const bigquery = require('@google-cloud/bigquery');
 
 exports.analyzeContents = (event, context) => {
   const file = data;
