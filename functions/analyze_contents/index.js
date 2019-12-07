@@ -8,12 +8,8 @@ const bigquery = require('@google-cloud/bigquery');
 exports.analyzeContents = (data, context) => {
   const file = data;
   console.log(`File ${file.name} uploaded.`);
-  if ((typeof(jsonObj.contentType) === "undefined") || (!jsonObj.contentType)) {
-    console.error(`Input request: ${jsonData}`);
-    throw new Error('ContentType not provided. Make sure you have a "contentType" property in your request');
-  }
-  if ((jsonObj.contentType.search(/image/i) == -1)) {
-    console.error(`Input request: ${jsonData}`);
-    throw new Error('Unsupported ContentType provided. Make sure you upload an image which includes a "contentType" property of image or video in your request');
+  console.log(`File ${file} uploaded.`);
+  if (!file.contentType.startsWith('image/')) {
+    console.log('This is not an image.');
   }
 };
