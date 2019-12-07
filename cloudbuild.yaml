@@ -1,4 +1,4 @@
 steps:
 - name: 'gcr.io/cloud-builders/gcloud'
   entrypoint: bash
-  args: ['bash', './scripts/deploy.sh']
+  args: ['./scripts/deploy.sh']
