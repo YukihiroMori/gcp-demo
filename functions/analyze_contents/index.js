@@ -5,7 +5,7 @@ const pubsub = require('@google-cloud/pubsub');
 const vision = require('@google-cloud/vision');
 const bigquery = require('@google-cloud/bigquery');
 
-exports.analyzeContents = (event, context) => {
+exports.analyzeContents = (data, context) => {
   const file = data;
   console.log(`File ${file.name} uploaded.`);
   if ((typeof(jsonObj.contentType) === "undefined") || (!jsonObj.contentType)) {
