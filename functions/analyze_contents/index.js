@@ -8,8 +8,7 @@ const bigquery = require('@google-cloud/bigquery');
 exports.analyzeContents = (data, context) => {
   const file = data;
   console.log(`File ${file.name} uploaded.`);
-  console.log(`File ${file.metageneration} uploaded.`);
-  if (!file.contentType.startsWith('image/')) {
-    console.log('This is not an image.');
-  }
+  const jsonData = Buffer.from(data, 'base64').toString();
+  var jsonObj = JSON.parse(jsonData);
+  console.log(`Received name: ${jsonObj.name} and bucket: ${jsonObj.bucket} and contentType: ${jsonObj.contentType}`);
 };
