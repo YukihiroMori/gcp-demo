@@ -6,7 +6,7 @@ const vision = require('@google-cloud/vision');
 const bigquery = require('@google-cloud/bigquery');
 const Buffer = require('safe-buffer').Buffer;
 
-exports.analyzeContents = async (data, context) => {
+exports.analyzeContents = async (data, context, callback) => {
   const object = data;
   console.log(`File ${object.name} uploaded.`);
   const jsonData = Buffer.from(object, 'base64').toString();
@@ -29,4 +29,6 @@ exports.analyzeContents = async (data, context) => {
     console.error(`Failed to analyze ${file.name}.`, err);
     throw err;
   }
+
+  callback();
 };
