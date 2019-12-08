@@ -1,11 +1,13 @@
 'use strict';
 
-const storage = require('@google-cloud/storage');
+const {Storage} = require('@google-cloud/storage');
 const pubsub = require('@google-cloud/pubsub');
 const vision = require('@google-cloud/vision');
 const bigquery = require('@google-cloud/bigquery');
 
 exports.analyzeContents = async (data, context, callback) => {
+  const storage = new Storage();
+
   const object = data;
   console.log(`File ${object.name} uploaded.`);
 
