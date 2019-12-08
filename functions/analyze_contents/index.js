@@ -4,10 +4,10 @@ const {Storage} = require('@google-cloud/storage');
 const pubsub = require('@google-cloud/pubsub');
 const vision = require('@google-cloud/vision');
 const bigquery = require('@google-cloud/bigquery');
+const storage = new Storage();
+const client = new vision.ImageAnnotatorClient();
 
 exports.analyzeContents = async (data, context, callback) => {
-  const storage = new Storage();
-
   const object = data;
   console.log(`File ${object.name} uploaded.`);
 
@@ -18,7 +18,7 @@ exports.analyzeContents = async (data, context, callback) => {
   console.log(`Received name: ${metadata.name} and bucket: ${metadata.bucket} and contentType: ${metadata.contentType}`);
 
   try {
-    const [result] = await vision.safeSearchDetection(filePath);
+    const [result] = await client.safeSearchDetection(filePath);
     const detections = result.safeSearchAnnotation || {};
 
     if (detections.adult === 'VERY_LIKELY') {
