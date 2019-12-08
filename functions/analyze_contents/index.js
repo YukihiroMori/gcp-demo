@@ -4,17 +4,16 @@ const storage = require('@google-cloud/storage');
 const pubsub = require('@google-cloud/pubsub');
 const vision = require('@google-cloud/vision');
 const bigquery = require('@google-cloud/bigquery');
-const Buffer = require('safe-buffer').Buffer;
 
 exports.analyzeContents = async (data, context, callback) => {
   const object = data;
   console.log(`File ${object.name} uploaded.`);
-  const jsonData = Buffer.from(object, 'base64').toString();
-  var jsonObj = JSON.parse(jsonData);
-  console.log(`Received name: ${jsonObj.name} and bucket: ${jsonObj.bucket} and contentType: ${jsonObj.contentType}`);
 
   const file = storage.bucket(object.bucket).file(object.name);
   const filePath = `gs://${object.bucket}/${object.name}`;
+
+  const [metadata] = await file.getMetadata()
+  console.log(`Received name: ${metadata.name} and bucket: ${metadata.bucket} and contentType: ${metadata.contentType}`);
 
   try {
     const [result] = await vision.safeSearchDetection(filePath);
