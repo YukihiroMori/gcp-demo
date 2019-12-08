@@ -4,6 +4,7 @@ const storage = require('@google-cloud/storage');
 const pubsub = require('@google-cloud/pubsub');
 const vision = require('@google-cloud/vision');
 const bigquery = require('@google-cloud/bigquery');
+const Buffer = require('safe-buffer').Buffer;
 
 exports.analyzeContents = async (data, context) => {
   const object = data;
