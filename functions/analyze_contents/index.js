@@ -23,14 +23,10 @@ exports.analyzeContents = async (data, context) => {
   }
 
   try {
-    const [result] = await client.safeSearchDetection(filePath);
-    const detections = result.safeSearchAnnotation || {};
-
-    if (detections.adult === 'VERY_LIKELY') {
-      console.log(`Detected ${file.name} as inappropriate.`);
-    } else {
-      console.log(`Detected ${file.name} as OK.`);
-    }
+    const [result] = await client.labelDetection(filePath);
+    const labels = result.labelAnnotations;
+    console.log('Labels:');
+    labels.forEach(label => console.log(label.description));
   } catch (err) {
     console.error(`Failed to analyze ${file.name}.`, err);
     throw err;
