@@ -17,7 +17,7 @@ exports.analyzeContents = async (data, context) => {
   const [metadata] = await file.getMetadata()
   console.log(`Received name: ${metadata.name} and bucket: ${metadata.bucket} and contentType: ${metadata.contentType}`);
 
-  if(!metadata.contentType.startWith("image")){
+  if(!metadata.contentType.startsWith("image")){
     console.error(`Failed to analyze ${file.name}. Only image contents accepted. `);
     return;
   }
