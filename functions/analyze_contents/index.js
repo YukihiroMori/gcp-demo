@@ -7,7 +7,7 @@ const bigquery = require('@google-cloud/bigquery');
 const storage = new Storage();
 const client = new vision.ImageAnnotatorClient();
 
-exports.analyzeContents = async (data, context, callback) => {
+exports.analyzeContents = async (data, context) => {
   const object = data;
   console.log(`File ${object.name} uploaded.`);
 
@@ -16,6 +16,11 @@ exports.analyzeContents = async (data, context, callback) => {
 
   const [metadata] = await file.getMetadata()
   console.log(`Received name: ${metadata.name} and bucket: ${metadata.bucket} and contentType: ${metadata.contentType}`);
+
+  if(!metadata.contentType.startWith("image")){
+    console.error(`Failed to analyze ${file.name}. Only image contents accepted. `);
+    return;
+  }
 
   try {
     const [result] = await client.safeSearchDetection(filePath);
@@ -30,6 +35,4 @@ exports.analyzeContents = async (data, context, callback) => {
     console.error(`Failed to analyze ${file.name}.`, err);
     throw err;
   }
-
-  callback();
 };
