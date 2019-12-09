@@ -23,10 +23,16 @@ exports.analyzeContents = async (data, context) => {
   }
 
   try {
-    const [result] = await client.labelDetection(filePath);
-    const labels = result.labelAnnotations;
-    console.log('Labels:');
-    labels.forEach(label => console.log(label.description));
+    const [result] = await client.faceDetection(filePath);
+    const faces = result.faceAnnotations;
+    console.log('Faces:');
+    faces.forEach((face, i) => {
+      console.log(`  Face #${i + 1}:`);
+      console.log(`    Joy: ${face.joyLikelihood}`);
+      console.log(`    Anger: ${face.angerLikelihood}`);
+      console.log(`    Sorrow: ${face.sorrowLikelihood}`);
+      console.log(`    Surprise: ${face.surpriseLikelihood}`);
+    });
   } catch (err) {
     console.error(`Failed to analyze ${file.name}.`, err);
     throw err;
