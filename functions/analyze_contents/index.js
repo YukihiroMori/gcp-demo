@@ -35,7 +35,7 @@ exports.analyzeContents = async (data, context) => {
       console.log(`    Surprise: ${face.surpriseLikelihood}`);
     });
 
-    const document = firestore.collection('demo').doc('images')
+    let document = firestore.collection('demo').doc('images');
     let getDoc = document.get()
       .then(doc => {
       if (!doc.exists) {
