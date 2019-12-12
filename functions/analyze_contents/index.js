@@ -1,10 +1,11 @@
 'use strict';
 
 const {Storage} = require('@google-cloud/storage');
-const pubsub = require('@google-cloud/pubsub');
 const vision = require('@google-cloud/vision');
-const bigquery = require('@google-cloud/bigquery');
+const {Firestore} = require('@google-cloud/firestore');
+
 const storage = new Storage();
+const firestore = new Firestore();
 const client = new vision.ImageAnnotatorClient();
 
 exports.analyzeContents = async (data, context) => {
@@ -33,6 +34,10 @@ exports.analyzeContents = async (data, context) => {
       console.log(`    Sorrow: ${face.sorrowLikelihood}`);
       console.log(`    Surprise: ${face.surpriseLikelihood}`);
     });
+
+    const document = firestore.collection('demo').doc('images').delete();
+
+
   } catch (err) {
     console.error(`Failed to analyze ${file.name}.`, err);
     throw err;
