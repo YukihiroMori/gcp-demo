@@ -35,8 +35,18 @@ exports.analyzeContents = async (data, context) => {
       console.log(`    Surprise: ${face.surpriseLikelihood}`);
     });
 
-    const document = firestore.collection('demo').doc('images').delete();
-
+    const document = firestore.collection('demo').doc('images')
+    let getDoc = document.get()
+      .then(doc => {
+      if (!doc.exists) {
+        console.log('No such document!');
+      } else {
+        console.log('Document data:', doc.data());
+      }
+    })
+    .catch(err => {
+      console.log('Error getting document', err);
+    });
 
   } catch (err) {
     console.error(`Failed to analyze ${file.name}.`, err);
